@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blog.R;
+import com.example.blog.databinding.SearchPostItemBinding;
 import com.example.blog.model.HomeModel;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class SearchPostAdapter extends RecyclerView.Adapter<SearchPostAdapter.SearchPostHolder> {
 
     private List<HomeModel> searchResultList;
+    SearchPostItemBinding searchPostItemBinding;
 
     public SearchPostAdapter(List<HomeModel> list) {
         searchResultList = list;
@@ -24,14 +26,19 @@ public class SearchPostAdapter extends RecyclerView.Adapter<SearchPostAdapter.Se
     @NonNull
     @Override
     public SearchPostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_post_item, parent, false);
-        return new SearchPostHolder(view);
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_post_item, parent, false);
+//        return new SearchPostHolder(view);
+        searchPostItemBinding = SearchPostItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new SearchPostHolder(searchPostItemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchPostHolder holder, int position) {
-        holder.authorTextView.setText(searchResultList.get(position).getAuthor_name());
-        holder.titleTextView.setText(searchResultList.get(position).getTitle());
+//        holder.authorTextView.setText(searchResultList.get(position).getAuthor_name());
+//        holder.titleTextView.setText(searchResultList.get(position).getTitle());
+        HomeModel postItem = searchResultList.get(position);
+        holder.searchPostItemBinding.authorTextView.setText(postItem.getAuthor_name());
+        holder.searchPostItemBinding.titleTextView.setText(postItem.getTitle());
     }
 
     @Override
@@ -41,13 +48,12 @@ public class SearchPostAdapter extends RecyclerView.Adapter<SearchPostAdapter.Se
 
     class SearchPostHolder extends RecyclerView.ViewHolder {
 
-        private TextView authorTextView, titleTextView;
+        SearchPostItemBinding searchPostItemBinding;
 
-        public SearchPostHolder(@NonNull View itemView) {
-            super(itemView);
+        public SearchPostHolder(@NonNull SearchPostItemBinding binding) {
+            super(binding.getRoot());
 
-            authorTextView = itemView.findViewById(R.id.author_TextView);
-            titleTextView = itemView.findViewById(R.id.title_textView);
+            this.searchPostItemBinding = binding;
         }
     }
 }

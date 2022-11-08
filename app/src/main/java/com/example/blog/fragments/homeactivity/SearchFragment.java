@@ -44,72 +44,76 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        initializeUiComponent(view);
-//        loadPosts();
-//        postSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                queryPostsByTitle(query);
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
+        initializeUiComponent(view);
+        loadPosts();
+        postSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                queryPostsByTitle(query);
+//                Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.equals(""))
+                    loadPosts();
+                return false;
+            }
+        });
     }
 
-//    private void initializeUiComponent(View view) {
-//        postSearchView = view.findViewById(R.id.postSearchView);
-//        searchResultRecyclerView = view.findViewById(R.id.searchResult_recyclerView);
-//        searchResultRecyclerView.setHasFixedSize(true);
-//        searchResultRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        searchPostList = new ArrayList<>();
-//        searchPostAdapter = new SearchPostAdapter(searchPostList);
-//        searchResultRecyclerView.setAdapter(searchPostAdapter);
-//    }
-//
-//    private void loadPosts() {
-//        AppService.appService.getAllPosts().enqueue(new Callback<List<HomeModel>>() {
-//            @Override
-//            public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
-//                if (response.isSuccessful()) {
-//                    searchPostList.addAll(response.body());
-//                    searchPostAdapter.notifyDataSetChanged();
-//                }
-//                else {
-//                    Toast.makeText(getActivity(), "Unable to query post from server! Please try again", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<HomeModel>> call, Throwable t) {
-//                t.printStackTrace();
-//            }
-//        });
-//    }
-//
-//    private void queryPostsByTitle(String titleQuery) {
-//        HashMap<String, String> titleQueryData = new HashMap<>();
-//        titleQueryData.put("query", titleQuery);
-//        AppService.appService.getPostsByTitleQuery(titleQueryData).enqueue(new Callback<List<HomeModel>>() {
-//            @Override
-//            public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
-//                if (response.isSuccessful()) {
-//                    searchPostList.clear();
-//                    searchPostList.addAll(response.body());
-//                    searchPostAdapter.notifyDataSetChanged();
-//                }
-//                else {
-//                    Toast.makeText(getActivity(), "Unable to query post from server! Please try again", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<HomeModel>> call, Throwable t) {
-//                t.printStackTrace();
-//            }
-//        });
-//    }
+    private void initializeUiComponent(View view) {
+        postSearchView = view.findViewById(R.id.postSearchView);
+        searchResultRecyclerView = view.findViewById(R.id.searchResult_recyclerView);
+        searchResultRecyclerView.setHasFixedSize(true);
+        searchResultRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        searchPostList = new ArrayList<>();
+        searchPostAdapter = new SearchPostAdapter(searchPostList);
+        searchResultRecyclerView.setAdapter(searchPostAdapter);
+    }
+
+    private void loadPosts() {
+        AppService.appService.getAllPosts().enqueue(new Callback<List<HomeModel>>() {
+            @Override
+            public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
+                if (response.isSuccessful()) {
+                    searchPostList.clear();
+                    if (response.body() != null)
+                        searchPostList.addAll(response.body());
+                    searchPostAdapter.notifyDataSetChanged();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Unable to query post from server! Please try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<HomeModel>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void queryPostsByTitle(String titleQuery) {
+        AppService.appService.getPostsByTitleQuery(titleQuery).enqueue(new Callback<List<HomeModel>>() {
+            @Override
+            public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
+                if (response.isSuccessful()) {
+                    searchPostList.clear();
+                    if (response.body() != null)
+                        searchPostList.addAll(response.body());
+                    searchPostAdapter.notifyDataSetChanged();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Unable to query post from server! Please try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<HomeModel>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
 }

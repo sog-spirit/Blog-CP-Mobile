@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface AppService {
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy HH:mm:ss").create();
@@ -60,8 +61,8 @@ public interface AppService {
     @GET("posts")
     Call<List<HomeModel>> getAllPosts();
 
-    @GET("posts")
-    Call<List<HomeModel>> getPostsByTitleQuery(@Body HashMap<String, String> titleQueryData);
+    @GET("post")
+    Call<List<HomeModel>> getPostsByTitleQuery(@Query("query") String titleQuery);
 
     @POST("post")
     Call<Void> createPost(@Body HashMap<String, String> newPostData);
