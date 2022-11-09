@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.homeactivity.CommentFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/commentRecyclerView"
+        android:layout_above="@id/commentSectionLayout"/>
+
+    <LinearLayout
+        android:padding="6dp"
+        android:orientation="horizontal"
+        android:id="@+id/commentSectionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/commentEditText"
+            android:padding="12dp"
+            android:hint="Write a comment..."/>
+
+        <ImageButton
+            android:id="@+id/sendCommentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_send_24"
+            android:background="@android:color/transparent"
+            android:elevation="1dp"
+            android:layout_margin="6dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

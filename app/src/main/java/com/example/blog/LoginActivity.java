@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.blog.databinding.ActivityLoginBinding;
+import com.example.blog.fragments.homeactivity.CommentAdapter;
+import com.example.blog.fragments.homeactivity.CommentFragment;
 import com.example.blog.fragments.loginactivity.LoginFragment;
 import com.example.blog.fragments.loginactivity.RegisterFragment;
 
@@ -21,7 +23,11 @@ public class LoginActivity extends AppCompatActivity {
         View viewRoot = activityLoginBinding.getRoot();
         setContentView(viewRoot);
 
-        setCurrentFragment(new LoginFragment());
+        boolean isComment = getIntent().getBooleanExtra("isComment", false);
+        if (isComment)
+            setCurrentFragment(new CommentFragment());
+        else
+            setCurrentFragment(new LoginFragment());
     }
 
     public void setCurrentFragment(Fragment fragment) {
@@ -29,6 +35,13 @@ public class LoginActivity extends AppCompatActivity {
         fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         if (fragment instanceof RegisterFragment) {
             fragmentTransaction.addToBackStack(null);
+        }
+        if (fragment instanceof CommentFragment) {
+            int postId = getIntent().getIntExtra("postId", -1);
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("postId", postId);
+            fragment.setArguments(bundle);
         }
         fragmentTransaction.replace(activityLoginBinding.frameLayout.getId(), fragment);
         fragmentTransaction.commit();

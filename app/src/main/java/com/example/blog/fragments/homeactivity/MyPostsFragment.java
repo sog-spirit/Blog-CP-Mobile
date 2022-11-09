@@ -2,65 +2,71 @@ package com.example.blog.fragments.homeactivity;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.blog.R;
+import com.example.blog.apiservice.AppService;
+import com.example.blog.databinding.FragmentMyPostsBinding;
+import com.example.blog.model.HomeModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyPostsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MyPostsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MyPostsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyPostsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyPostsFragment newInstance(String param1, String param2) {
-        MyPostsFragment fragment = new MyPostsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private FragmentMyPostsBinding fragmentMyPostsBinding;
+    MyPostsAdapter myPostsAdapter;
+    private List<HomeModel> myPostsList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_posts, container, false);
+        fragmentMyPostsBinding = FragmentMyPostsBinding.inflate(inflater, container, false);
+//        return inflater.inflate(R.layout.fragment_my_posts, container, false);
+        return fragmentMyPostsBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        fragmentMyPostsBinding.allPostsRecyclerView.setHasFixedSize(false);
+        fragmentMyPostsBinding.allPostsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        myPostsList = new ArrayList<>();
+        myPostsAdapter = new MyPostsAdapter(myPostsList, getContext());
+        fragmentMyPostsBinding.allPostsRecyclerView.setAdapter(myPostsAdapter);
+        loadCurrentUserPosts();
+    }
+
+    private void loadCurrentUserPosts() {
+        AppService.appService.getPostsByCurrentUser().enqueue(new Callback<List<HomeModel>>() {
+            @Override
+            public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
+                if (response.isSuccessful()) {
+                    myPostsList.addAll(response.body());
+                    myPostsAdapter.notifyDataSetChanged();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Unable to load post from server! Please try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<HomeModel>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

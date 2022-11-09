@@ -1,5 +1,6 @@
 package com.example.blog.apiservice;
 
+import com.example.blog.model.CommentModel;
 import com.example.blog.model.HomeModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -61,10 +62,18 @@ public interface AppService {
     @GET("posts")
     Call<List<HomeModel>> getAllPosts();
 
+    @POST("posts")
+    Call<List<HomeModel>> getPostsByCurrentUser();
+
     @GET("post")
     Call<List<HomeModel>> getPostsByTitleQuery(@Query("query") String titleQuery);
 
     @POST("post")
     Call<Void> createPost(@Body HashMap<String, String> newPostData);
 
+    @GET("comment")
+    Call<List<CommentModel>> getThisPostComments(@Query("post_id") int postId);
+
+    @POST("comment")
+    Call<Void> createComment(@Body HashMap<String, Object> newCommentData);
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.blog.R;
 import com.example.blog.apiservice.AppService;
+import com.example.blog.databinding.FragmentAllPostsBinding;
 import com.example.blog.model.HomeModel;
 
 import java.util.ArrayList;
@@ -25,15 +26,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AllPostsFragment extends Fragment {
-    private RecyclerView recyclerView;
+    private FragmentAllPostsBinding fragmentAllPostsBinding;
     HomeAdapter homeAdapter;
     private List<HomeModel> postList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_all_posts, container, false);
+        fragmentAllPostsBinding = FragmentAllPostsBinding.inflate(inflater, container, false);
+        return fragmentAllPostsBinding.getRoot();
     }
 
     @Override
@@ -43,14 +44,13 @@ public class AllPostsFragment extends Fragment {
         initializeView(view);
         postList = new ArrayList<>();
         homeAdapter = new HomeAdapter(postList, getContext());
-        recyclerView.setAdapter(homeAdapter);
+        fragmentAllPostsBinding.allPostsRecyclerView.setAdapter(homeAdapter);
         loadPosts();
     }
 
     private void initializeView(View view) {
-        recyclerView = view.findViewById(R.id.allPosts_recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        fragmentAllPostsBinding.allPostsRecyclerView.setHasFixedSize(false);
+        fragmentAllPostsBinding.allPostsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void loadPosts() {
