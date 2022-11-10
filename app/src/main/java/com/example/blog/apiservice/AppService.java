@@ -20,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -79,6 +80,9 @@ public interface AppService {
     @POST("post/detail")
     Call<HomeModel> getPostDetail(@Body HashMap<String, Integer> postId);
 
+    @HTTP(method = "DELETE", hasBody = true, path = "post")
+    Call<Void> deletePost(@Body HashMap<String, Integer> postId);
+
     @GET("comment")
     Call<List<CommentModel>> getThisPostComments(@Query("post_id") int postId);
 
@@ -91,6 +95,6 @@ public interface AppService {
     @PATCH("comment")
     Call<Void> updateComment(@Body HashMap<String, Object> updateCommentData);
 
-    @DELETE("comment")
+    @HTTP(method = "DELETE", hasBody = true, path = "comment")
     Call<Void> deleteComment(@Body HashMap<String, Integer> commentId);
 }

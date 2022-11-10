@@ -9,11 +9,11 @@
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/comment_item.xml" value="0.5" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_all_posts.xml" value="0.36666666666666664" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_comment.xml" value="0.25" />
-        <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_comment_detail.xml" value="0.1" />
+        <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_comment_detail.xml" value="0.5" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_my_posts.xml" value="0.21467391304347827" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_new_post.xml" value="0.25" />
-        <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_post_detail.xml" value="0.1" />
+        <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_post_detail.xml" value="0.33" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_profile.xml" value="0.18034447821681865" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_register.xml" value="0.25" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_search.xml" value="0.18034447821681865" />

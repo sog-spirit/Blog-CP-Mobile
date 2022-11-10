@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.blog.R;
 import com.example.blog.apiservice.AppService;
 import com.example.blog.databinding.FragmentCommentDetailBinding;
 import com.example.blog.model.CommentModel;
@@ -52,6 +51,12 @@ public class CommentDetailFragment extends Fragment {
                     return;
                 }
                 updateComment(commentId, content);
+            }
+        });
+        fragmentCommentDetailBinding.deleteCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteComment();
             }
         });
         fragmentCommentDetailBinding.contentTextInput.addTextChangedListener(new TextWatcher() {
@@ -105,6 +110,26 @@ public class CommentDetailFragment extends Fragment {
                 }
                 else {
                     Toast.makeText(getContext(), "Unable to edit comment", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+    private void deleteComment() {
+        HashMap<String, Integer> commentIdData = new HashMap<>();
+        commentIdData.put("comment_id", commentId);
+        AppService.appService.deleteComment(commentIdData).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Comment deleted successfully", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getContext(), "Unable to delete comment", Toast.LENGTH_LONG).show();
                 }
             }
 

@@ -65,6 +65,12 @@ public class PostDetailFragment extends Fragment {
                 updatePost(title, content, status);
             }
         });
+        fragmentPostDetailBinding.deletePostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletePost();
+            }
+        });
         fragmentPostDetailBinding.titleTextInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -142,6 +148,26 @@ public class PostDetailFragment extends Fragment {
                 }
                 else {
                     Toast.makeText(getContext(), "An error has occurred while updating post", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+    private void deletePost() {
+        HashMap<String, Integer> postIdData = new HashMap<>();
+        postIdData.put("post_id", postId);
+        AppService.appService.deletePost(postIdData).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Delete post successfully", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getContext(), "Unable to delete post", Toast.LENGTH_LONG).show();
                 }
             }
 

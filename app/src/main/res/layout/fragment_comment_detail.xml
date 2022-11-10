@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.homeactivity.CommentDetailFragment">
+    tools:context=".fragments.homeactivity.CommentDetailFragment"
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,4 +39,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save comment" />
+
+    <Button
+        android:id="@+id/deleteCommentButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete comment"/>
+
+    <Button
+        android:id="@+id/cancelEditCommentButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"/>
 </LinearLayout>

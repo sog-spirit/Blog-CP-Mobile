@@ -73,4 +73,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save post" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/deletePostButton"
+        android:text="Delete post"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancelCreatePostButton"
+        android:text="Cancel"/>
 </LinearLayout>
