@@ -3,43 +3,43 @@ package com.example.blog.model;
 import java.util.Date;
 
 public class CommentModel {
-    private int post_id, user_id, comment_id;
+    private int post, user, id;
     private String username, content;
-    private boolean is_deleted;
+    private boolean is_delete;
     private Date created_on;
 
-    public CommentModel(int post_id, int user_id, int comment_id, String username, String content, boolean is_deleted, Date created_on) {
-        this.post_id = post_id;
-        this.user_id = user_id;
-        this.comment_id = comment_id;
+    public CommentModel(int post, int user, int id, String username, String content, boolean is_delete, Date created_on) {
+        this.post = post;
+        this.user = user;
+        this.id = id;
         this.username = username;
         this.content = content;
-        this.is_deleted = is_deleted;
+        this.is_delete = is_delete;
         this.created_on = created_on;
     }
 
-    public int getPost_id() {
-        return post_id;
+    public int getPost() {
+        return post;
     }
 
-    public void setPost_id(int post_id) {
-        this.post_id = post_id;
+    public void setPost(int post) {
+        this.post = post;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUser() {
+        return user;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser(int user) {
+        this.user = user;
     }
 
-    public int getComment_id() {
-        return comment_id;
+    public int getId() {
+        return id;
     }
 
-    public void setComment_id(int comment_id) {
-        this.comment_id = comment_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -58,12 +58,12 @@ public class CommentModel {
         this.content = content;
     }
 
-    public boolean isIs_deleted() {
-        return is_deleted;
+    public boolean isIs_delete() {
+        return is_delete;
     }
 
-    public void setIs_deleted(boolean is_deleted) {
-        this.is_deleted = is_deleted;
+    public void setIs_delete(boolean is_delete) {
+        this.is_delete = is_delete;
     }
 
     public Date getCreated_on() {

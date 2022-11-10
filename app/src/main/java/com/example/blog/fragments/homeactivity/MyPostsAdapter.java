@@ -1,6 +1,7 @@
 package com.example.blog.fragments.homeactivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blog.LoginActivity;
 import com.example.blog.databinding.MyPostItemBinding;
 import com.example.blog.model.HomeModel;
 
@@ -40,6 +42,15 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.MyPostsH
         holder.myPostItemBinding.contentTextView.setText(postItem.getContent());
         holder.myPostItemBinding.timeTextView.setText(postItem.getCreated_on().toString());
         holder.myPostItemBinding.statusTextView.setText(postItem.getStatus());
+        holder.myPostItemBinding.commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, LoginActivity.class);
+                intent.putExtra("postId", postItem.getId());
+                intent.putExtra("isComment", true);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

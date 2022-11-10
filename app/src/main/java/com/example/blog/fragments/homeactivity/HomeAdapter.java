@@ -33,8 +33,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     public HomeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         homePostItemBinding = HomePostItemBinding.inflate(LayoutInflater.from(context), parent, false);
         return new HomeHolder(homePostItemBinding);
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_post_item, null);
-//        return new HomeHolder(view);
     }
 
     @Override
@@ -53,10 +51,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 context.startActivity(intent);
             }
         });
-//        holder.authorTextView.setText(postList.get(position).getAuthor_name());
-//        holder.timeTextView.setText(postList.get(position).getCreated_on().toString());
-//        holder.contentTextView.setText(postList.get(position).getContent());
-//        holder.titleTextView.setText(postList.get(position).getTitle());
     }
 
     @Override

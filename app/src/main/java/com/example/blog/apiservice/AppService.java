@@ -82,6 +82,9 @@ public interface AppService {
     @GET("comment")
     Call<List<CommentModel>> getThisPostComments(@Query("post_id") int postId);
 
+    @GET("comment/detail")
+    Call<CommentModel> getCommentById(@Query("comment_id") int commentId);
+
     @POST("comment")
     Call<Void> createComment(@Body HashMap<String, Object> newCommentData);
 

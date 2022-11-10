@@ -1,5 +1,6 @@
 package com.example.blog.fragments.homeactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.blog.LoginActivity;
 import com.example.blog.R;
 import com.example.blog.apiservice.AppService;
 import com.example.blog.databinding.FragmentCommentBinding;
@@ -27,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CommentFragment extends Fragment {
+public class CommentFragment extends Fragment implements CommentAdapter.OnCommentListener {
     private FragmentCommentBinding fragmentCommentBinding;
     CommentAdapter commentAdapter;
     private List<CommentModel> commentList;
@@ -49,7 +51,7 @@ public class CommentFragment extends Fragment {
         fragmentCommentBinding.commentRecyclerView.setHasFixedSize(false);
         fragmentCommentBinding.commentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         commentList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(commentList);
+        commentAdapter = new CommentAdapter(commentList, CommentFragment.this);
         fragmentCommentBinding.commentRecyclerView.setAdapter(commentAdapter);
         loadThisPostComments();
         fragmentCommentBinding.sendCommentButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +87,12 @@ public class CommentFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadThisPostComments();
+    }
+
     private void loadThisPostComments() {
         AppService.appService.getThisPostComments(postId).enqueue(new Callback<List<CommentModel>>() {
             @Override
@@ -104,5 +112,14 @@ public class CommentFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onCommentClick(int position) {
+        CommentModel comment = commentList.get(position);
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.putExtra("commentId", comment.getId());
+        intent.putExtra("isCommentDetail", true);
+        getContext().startActivity(intent);
     }
 }
