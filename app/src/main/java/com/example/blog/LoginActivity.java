@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.blog.databinding.ActivityLoginBinding;
 import com.example.blog.fragments.homeactivity.CommentAdapter;
 import com.example.blog.fragments.homeactivity.CommentFragment;
+import com.example.blog.fragments.homeactivity.PostDetailFragment;
 import com.example.blog.fragments.loginactivity.LoginFragment;
 import com.example.blog.fragments.loginactivity.RegisterFragment;
 
@@ -24,8 +25,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(viewRoot);
 
         boolean isComment = getIntent().getBooleanExtra("isComment", false);
+        boolean isEdit = getIntent().getBooleanExtra("isEdit", false);
         if (isComment)
             setCurrentFragment(new CommentFragment());
+        else if (isEdit)
+            setCurrentFragment(new PostDetailFragment());
         else
             setCurrentFragment(new LoginFragment());
     }
@@ -37,6 +41,13 @@ public class LoginActivity extends AppCompatActivity {
             fragmentTransaction.addToBackStack(null);
         }
         if (fragment instanceof CommentFragment) {
+            int postId = getIntent().getIntExtra("postId", -1);
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("postId", postId);
+            fragment.setArguments(bundle);
+        }
+        if (fragment instanceof PostDetailFragment) {
             int postId = getIntent().getIntExtra("postId", -1);
 
             Bundle bundle = new Bundle();

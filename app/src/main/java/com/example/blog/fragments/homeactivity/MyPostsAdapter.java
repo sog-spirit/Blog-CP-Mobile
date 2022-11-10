@@ -2,6 +2,7 @@ package com.example.blog.fragments.homeactivity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -17,17 +18,19 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.MyPostsH
     private List<HomeModel> myPostsList;
     MyPostItemBinding myPostItemBinding;
     Context context;
+    OnPostListener onPostListener;
 
-    public MyPostsAdapter(List<HomeModel> list, Context _context) {
+    public MyPostsAdapter(List<HomeModel> list, Context _context, OnPostListener postListener) {
         myPostsList = list;
         context = _context;
+        onPostListener = postListener;
     }
 
     @NonNull
     @Override
     public MyPostsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         myPostItemBinding = MyPostItemBinding.inflate(LayoutInflater.from(context), parent, false);
-        return new MyPostsHolder(myPostItemBinding);
+        return new MyPostsHolder(myPostItemBinding, onPostListener);
     }
 
     @Override
@@ -44,13 +47,25 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.MyPostsH
         return myPostsList.size();
     }
 
-    static class MyPostsHolder extends RecyclerView.ViewHolder {
+    class MyPostsHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         MyPostItemBinding myPostItemBinding;
+        OnPostListener onPostListener;
 
-        public MyPostsHolder(@NonNull MyPostItemBinding binding) {
+        public MyPostsHolder(@NonNull MyPostItemBinding binding, OnPostListener postListener) {
             super(binding.getRoot());
 
             this.myPostItemBinding = binding;
+            this.onPostListener = postListener;
+            binding.getRoot().setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            onPostListener.onPostClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnPostListener {
+        void onPostClick(int position);
     }
 }

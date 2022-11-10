@@ -1,5 +1,6 @@
 package com.example.blog.fragments.homeactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.blog.LoginActivity;
 import com.example.blog.R;
 import com.example.blog.apiservice.AppService;
 import com.example.blog.databinding.FragmentMyPostsBinding;
@@ -24,8 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyPostsFragment extends Fragment {
-
+public class MyPostsFragment extends Fragment implements MyPostsAdapter.OnPostListener {
     private FragmentMyPostsBinding fragmentMyPostsBinding;
     MyPostsAdapter myPostsAdapter;
     private List<HomeModel> myPostsList;
@@ -34,7 +35,6 @@ public class MyPostsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentMyPostsBinding = FragmentMyPostsBinding.inflate(inflater, container, false);
-//        return inflater.inflate(R.layout.fragment_my_posts, container, false);
         return fragmentMyPostsBinding.getRoot();
     }
 
@@ -45,8 +45,14 @@ public class MyPostsFragment extends Fragment {
         fragmentMyPostsBinding.allPostsRecyclerView.setHasFixedSize(false);
         fragmentMyPostsBinding.allPostsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myPostsList = new ArrayList<>();
-        myPostsAdapter = new MyPostsAdapter(myPostsList, getContext());
+        myPostsAdapter = new MyPostsAdapter(myPostsList, getContext(), MyPostsFragment.this);
         fragmentMyPostsBinding.allPostsRecyclerView.setAdapter(myPostsAdapter);
+        loadCurrentUserPosts();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         loadCurrentUserPosts();
     }
 
@@ -55,6 +61,7 @@ public class MyPostsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
                 if (response.isSuccessful()) {
+                    myPostsList.clear();
                     myPostsList.addAll(response.body());
                     myPostsAdapter.notifyDataSetChanged();
                 }
@@ -68,5 +75,14 @@ public class MyPostsFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onPostClick(int position) {
+        HomeModel post = myPostsList.get(position);
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.putExtra("postId", post.getId());
+        intent.putExtra("isEdit", true);
+        getContext().startActivity(intent);
     }
 }
