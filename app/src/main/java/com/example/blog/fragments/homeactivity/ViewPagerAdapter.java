@@ -21,11 +21,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new AllPostsFragment();
             case 1:
                 return new SearchFragment();
+//            case 2:
+//                return new NewPostFragment();
             case 2:
-                return new NewPostFragment();
-            case 3:
                 return new MyPostsFragment();
-            case 4:
+            case 3:
                 return new ProfileFragment();
         }
         return new AllPostsFragment();

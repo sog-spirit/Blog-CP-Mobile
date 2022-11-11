@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/drawable/ic_baseline_add_circle_outline_24.xml" value="0.303" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/activity_fragment_replacer.xml" value="0.17806484295845998" />
-        <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/activity_home.xml" value="0.22" />
+        <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/activity_home.xml" value="0.6512488436632747" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/activity_login.xml" value="0.17831813576494426" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/comment_item.xml" value="0.5" />
         <entry key="..\:/blog_cross_platform/api/blog_mobile_second/app/src/main/res/layout/fragment_all_posts.xml" value="0.36666666666666664" />

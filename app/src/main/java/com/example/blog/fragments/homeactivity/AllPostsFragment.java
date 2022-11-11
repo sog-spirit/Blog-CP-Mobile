@@ -48,6 +48,12 @@ public class AllPostsFragment extends Fragment {
         loadPosts();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPosts();
+    }
+
     private void initializeView(View view) {
         fragmentAllPostsBinding.allPostsRecyclerView.setHasFixedSize(false);
         fragmentAllPostsBinding.allPostsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -58,6 +64,7 @@ public class AllPostsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
                 if (response.isSuccessful()) {
+                    postList.clear();
                     postList.addAll(response.body());
                     homeAdapter.notifyDataSetChanged();
                 }

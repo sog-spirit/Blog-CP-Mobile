@@ -7,11 +7,30 @@
     tools:context=".HomeActivity"
     android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
+    <RelativeLayout
+        android:id="@+id/buttonTopRightLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/createPostButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackground"
+            android:src="@drawable/ic_baseline_add_circle_outline_24"
+            android:clickable="true"
+            android:focusable="true" />
+    </RelativeLayout>
+
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/homeViewPager"
-        android:layout_above="@id/tabLayout"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tabLayout"
+        android:layout_below="@id/buttonTopRightLayout" />
 
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"

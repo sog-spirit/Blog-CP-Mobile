@@ -2,6 +2,7 @@ package com.example.blog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,15 +19,24 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityHomeBinding = ActivityHomeBinding.inflate(getLayoutInflater());
         View viewRoot = activityHomeBinding.getRoot();
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
         setContentView(viewRoot);
-
         initializeBottomNavTabs();
+        activityHomeBinding.createPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                intent.putExtra("isCreatePost", true);
+                HomeActivity.this.startActivity(intent);
+            }
+        });
     }
 
     private void initializeBottomNavTabs() {
         activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_home_24));
         activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_search_24));
-        activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_add_circle_outline_24));
+//        activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_add_circle_outline_24));
         activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_view_list_24));
         activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_person_24));
 

@@ -11,6 +11,7 @@ import com.example.blog.databinding.ActivityLoginBinding;
 import com.example.blog.fragments.homeactivity.CommentAdapter;
 import com.example.blog.fragments.homeactivity.CommentDetailFragment;
 import com.example.blog.fragments.homeactivity.CommentFragment;
+import com.example.blog.fragments.homeactivity.NewPostFragment;
 import com.example.blog.fragments.homeactivity.PostDetailFragment;
 import com.example.blog.fragments.loginactivity.LoginFragment;
 import com.example.blog.fragments.loginactivity.RegisterFragment;
@@ -23,17 +24,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityLoginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         View viewRoot = activityLoginBinding.getRoot();
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
         setContentView(viewRoot);
 
         boolean isComment = getIntent().getBooleanExtra("isComment", false);
         boolean isEdit = getIntent().getBooleanExtra("isEdit", false);
         boolean isCommentDetail = getIntent().getBooleanExtra("isCommentDetail", false);
+        boolean isCreatePost = getIntent().getBooleanExtra("isCreatePost", false);
         if (isComment)
             setCurrentFragment(new CommentFragment());
         else if (isEdit)
             setCurrentFragment(new PostDetailFragment());
         else if (isCommentDetail)
             setCurrentFragment(new CommentDetailFragment());
+        else if (isCreatePost)
+            setCurrentFragment(new NewPostFragment());
         else
             setCurrentFragment(new LoginFragment());
     }

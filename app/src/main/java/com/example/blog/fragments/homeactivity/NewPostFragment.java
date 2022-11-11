@@ -107,10 +107,8 @@ public class NewPostFragment extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    fragmentNewPostBinding.titleTextInput.setText("");
-                    fragmentNewPostBinding.contentTextInput.setText("");
-                    fragmentNewPostBinding.postStatusSpinner.setSelection(0);
                     Toast.makeText(getContext(), "Post uploaded successfully", Toast.LENGTH_LONG).show();
+                    getActivity().finish();
                 }
                 else {
                     Toast.makeText(getContext(), "An error has occurred while creating new post", Toast.LENGTH_LONG).show();
