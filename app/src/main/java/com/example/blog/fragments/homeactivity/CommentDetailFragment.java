@@ -57,6 +57,13 @@ public class CommentDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 deleteComment();
+                getActivity().finish();
+            }
+        });
+        fragmentCommentDetailBinding.cancelEditCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
             }
         });
         fragmentCommentDetailBinding.contentTextInput.addTextChangedListener(new TextWatcher() {

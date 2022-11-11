@@ -1,5 +1,6 @@
 package com.example.blog.fragments.homeactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.blog.LoginActivity;
 import com.example.blog.R;
 import com.example.blog.apiservice.AppService;
 import com.example.blog.model.HomeModel;
@@ -26,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements SearchPostAdapter.OnPostListener {
     SearchView postSearchView;
     RecyclerView searchResultRecyclerView;
 
@@ -69,7 +71,7 @@ public class SearchFragment extends Fragment {
         searchResultRecyclerView.setHasFixedSize(true);
         searchResultRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         searchPostList = new ArrayList<>();
-        searchPostAdapter = new SearchPostAdapter(searchPostList);
+        searchPostAdapter = new SearchPostAdapter(searchPostList, SearchFragment.this);
         searchResultRecyclerView.setAdapter(searchPostAdapter);
     }
 
@@ -115,5 +117,14 @@ public class SearchFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onPostClick(int position) {
+        HomeModel post = searchPostList.get(position);
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.putExtra("postId", post.getId());
+        intent.putExtra("isComment", true);
+        getContext().startActivity(intent);
     }
 }

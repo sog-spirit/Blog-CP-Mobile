@@ -69,6 +69,13 @@ public class PostDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 deletePost();
+                getActivity().finish();
+            }
+        });
+        fragmentPostDetailBinding.cancelCreatePostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
             }
         });
         fragmentPostDetailBinding.titleTextInput.addTextChangedListener(new TextWatcher() {

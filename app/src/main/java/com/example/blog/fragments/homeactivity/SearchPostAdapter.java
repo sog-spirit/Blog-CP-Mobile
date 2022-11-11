@@ -18,24 +18,23 @@ public class SearchPostAdapter extends RecyclerView.Adapter<SearchPostAdapter.Se
 
     private List<HomeModel> searchResultList;
     SearchPostItemBinding searchPostItemBinding;
+    OnPostListener onPostListener;
 
-    public SearchPostAdapter(List<HomeModel> list) {
-        searchResultList = list;
+
+    public SearchPostAdapter(List<HomeModel> list, OnPostListener listener) {
+        this.searchResultList = list;
+        this.onPostListener = listener;
     }
 
     @NonNull
     @Override
     public SearchPostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_post_item, parent, false);
-//        return new SearchPostHolder(view);
         searchPostItemBinding = SearchPostItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new SearchPostHolder(searchPostItemBinding);
+        return new SearchPostHolder(searchPostItemBinding, onPostListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchPostHolder holder, int position) {
-//        holder.authorTextView.setText(searchResultList.get(position).getAuthor_name());
-//        holder.titleTextView.setText(searchResultList.get(position).getTitle());
         HomeModel postItem = searchResultList.get(position);
         holder.searchPostItemBinding.authorTextView.setText(postItem.getAuthor_name());
         holder.searchPostItemBinding.titleTextView.setText(postItem.getTitle());
@@ -46,14 +45,26 @@ public class SearchPostAdapter extends RecyclerView.Adapter<SearchPostAdapter.Se
         return searchResultList.size();
     }
 
-    class SearchPostHolder extends RecyclerView.ViewHolder {
+    class SearchPostHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         SearchPostItemBinding searchPostItemBinding;
+        OnPostListener onPostListener;
 
-        public SearchPostHolder(@NonNull SearchPostItemBinding binding) {
+        public SearchPostHolder(@NonNull SearchPostItemBinding binding, OnPostListener listener) {
             super(binding.getRoot());
 
             this.searchPostItemBinding = binding;
+            this.onPostListener = listener;
+            binding.getRoot().setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            onPostListener.onPostClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnPostListener {
+        void onPostClick(int position);
     }
 }
