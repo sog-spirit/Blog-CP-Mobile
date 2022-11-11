@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.blog.R;
 import com.example.blog.apiservice.AppService;
+import com.example.blog.databinding.FragmentNewPostBinding;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashMap;
@@ -28,44 +29,40 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NewPostFragment extends Fragment {
-    private EditText titleTextInput, contentTextInput;
-    private TextInputLayout titleTextInputLayout, contentTextInputLayout;
-    private Spinner postStatusSpinner;
-    private Button createPostButton;
+    private FragmentNewPostBinding fragmentNewPostBinding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_new_post, container, false);
+        fragmentNewPostBinding = FragmentNewPostBinding.inflate(inflater, container, false);
+        return fragmentNewPostBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initializeView(view);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(), R.array.post_status, R.layout.spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        postStatusSpinner.setAdapter(spinnerAdapter);
+        fragmentNewPostBinding.postStatusSpinner.setAdapter(spinnerAdapter);
 
-        createPostButton.setOnClickListener(new View.OnClickListener() {
+        fragmentNewPostBinding.createPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = titleTextInput.getText().toString();
-                String content = contentTextInput.getText().toString();
+                String title = fragmentNewPostBinding.titleTextInput.getText().toString();
+                String content = fragmentNewPostBinding.contentTextInput.getText().toString();
                 if (title.isEmpty() || content.isEmpty()) {
                     if (title.isEmpty())
-                        titleTextInputLayout.setError("Title is empty");
+                        fragmentNewPostBinding.titleTextInputLayout.setError("Title is empty");
                     if (content.isEmpty())
-                        contentTextInputLayout.setError("Content is empty");
+                        fragmentNewPostBinding.contentTextInputLayout.setError("Content is empty");
                     return;
                 }
-                String status = postStatusSpinner.getSelectedItem().toString().toUpperCase();
+                String status = fragmentNewPostBinding.postStatusSpinner.getSelectedItem().toString().toUpperCase();
                 createNewPost(title, content, status);
             }
         });
-        titleTextInput.addTextChangedListener(new TextWatcher() {
+        fragmentNewPostBinding.titleTextInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -78,11 +75,11 @@ public class NewPostFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (titleTextInput.getText().length() > 0)
-                    titleTextInputLayout.setError(null);
+                if (fragmentNewPostBinding.titleTextInput.getText().length() > 0)
+                    fragmentNewPostBinding.titleTextInputLayout.setError(null);
             }
         });
-        contentTextInput.addTextChangedListener(new TextWatcher() {
+        fragmentNewPostBinding.contentTextInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -95,19 +92,10 @@ public class NewPostFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (contentTextInput.getText().length() > 0)
-                    contentTextInputLayout.setError(null);
+                if (fragmentNewPostBinding.contentTextInput.getText().length() > 0)
+                    fragmentNewPostBinding.contentTextInputLayout.setError(null);
             }
         });
-    }
-
-    private void initializeView(View view) {
-        titleTextInput = view.findViewById(R.id.title_textInput);
-        titleTextInputLayout = view.findViewById(R.id.title_textInputLayout);
-        contentTextInput = view.findViewById(R.id.content_textInput);
-        contentTextInputLayout = view.findViewById(R.id.content_textInputLayout);
-        postStatusSpinner = view.findViewById(R.id.postStatus_spinner);
-        createPostButton = view.findViewById(R.id.createPostButton);
     }
 
     private void createNewPost(String title, String content, String status) {
@@ -119,9 +107,9 @@ public class NewPostFragment extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    titleTextInput.setText("");
-                    contentTextInput.setText("");
-                    postStatusSpinner.setSelection(0);
+                    fragmentNewPostBinding.titleTextInput.setText("");
+                    fragmentNewPostBinding.contentTextInput.setText("");
+                    fragmentNewPostBinding.postStatusSpinner.setSelection(0);
                     Toast.makeText(getContext(), "Post uploaded successfully", Toast.LENGTH_LONG).show();
                 }
                 else {
