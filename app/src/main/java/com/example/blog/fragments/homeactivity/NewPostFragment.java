@@ -96,6 +96,12 @@ public class NewPostFragment extends Fragment {
                     fragmentNewPostBinding.contentTextInputLayout.setError(null);
             }
         });
+        fragmentNewPostBinding.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
     }
 
     private void createNewPost(String title, String content, String status) {

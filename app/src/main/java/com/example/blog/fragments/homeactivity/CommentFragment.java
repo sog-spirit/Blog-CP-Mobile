@@ -85,6 +85,12 @@ public class CommentFragment extends Fragment implements CommentAdapter.OnCommen
                 });
             }
         });
+        fragmentCommentBinding.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
     }
 
     @Override

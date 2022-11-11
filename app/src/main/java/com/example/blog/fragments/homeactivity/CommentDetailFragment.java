@@ -60,7 +60,7 @@ public class CommentDetailFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        fragmentCommentDetailBinding.cancelEditCommentButton.setOnClickListener(new View.OnClickListener() {
+        fragmentCommentDetailBinding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().finish();

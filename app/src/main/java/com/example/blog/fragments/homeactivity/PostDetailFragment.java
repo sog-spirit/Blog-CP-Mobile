@@ -72,7 +72,7 @@ public class PostDetailFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        fragmentPostDetailBinding.cancelCreatePostButton.setOnClickListener(new View.OnClickListener() {
+        fragmentPostDetailBinding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().finish();

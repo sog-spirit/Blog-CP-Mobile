@@ -36,7 +36,6 @@ public class HomeActivity extends AppCompatActivity {
     private void initializeBottomNavTabs() {
         activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_home_24));
         activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_search_24));
-//        activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_add_circle_outline_24));
         activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_view_list_24));
         activityHomeBinding.tabLayout.addTab(activityHomeBinding.tabLayout.newTab().setIcon(R.drawable.ic_baseline_person_24));
 
